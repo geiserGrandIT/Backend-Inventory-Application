@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xl%*imohljwh#_!3@t-k(dh@hqvii8=vf(7cdm)%^w)jc+_c@+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "::1", "192.168.1.129", "inventory.geisergrand.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "::1", "192.168.1.129",'ims.geisergrand.com', "inventory.geisergrand.com"]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -86,7 +86,7 @@ DATABASES = {
         'USER': 'postgres',
         'PORT': 5432,
         'HOST': 'localhost',
-        'PASSWORD': 'agrcoeudstahodeu3#'
+        'PASSWORD': 'pg-grand-18'
     }
 }
 
