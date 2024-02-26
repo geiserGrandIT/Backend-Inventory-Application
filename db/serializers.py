@@ -23,7 +23,11 @@ class ItemSerialier(ModelSerializer):
     class Meta:
         model = Item
         fields = "__all__"
-    pass
+
+
+
+
+
 class AuditSerializer(ModelSerializer):
     items = ItemSerialier(many=True)
     class Meta:

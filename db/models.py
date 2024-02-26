@@ -30,16 +30,16 @@ class Item(models.Model):
     min_quantity = models.IntegerField(default=0, blank=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ForeignKey(Item_Image, on_delete=models.CASCADE)
-    last_update = models.DateTimeField()
-    in_use = models.DateTimeField(blank=True)
-    added = models.DateTimeField(auto_now=True)
+    last_update = models.DateTimeField(auto_now=True)
+    in_use = models.DateTimeField(blank=True, null = True)
+    added = models.DateTimeField(auto_now_add=True)
     url = models.CharField(max_length=2048, default=str(""))
     price = models.DecimalField(max_digits=10,decimal_places=2, default=Decimal('0.00'))
     tags = models.ManyToManyField(ItemTag)
     notes = models.CharField(max_length=2048, blank=True, null=True)
     cancelled = models.DateField(blank=True, null=True)
     def __str__(self) -> str:
-        return self.name
+        return self.name + " " + str(self.pk)
 
     
 class Audit(models.Model):

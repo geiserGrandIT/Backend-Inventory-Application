@@ -13,59 +13,8 @@ class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ItemSerialier
     lookup_field = 'pk'
     def partial_update(self, request, *args, **kwargs):
-        print("partial update called")
-        instance = self.get_object()
-        isAudit = request.data.get('is-audit')
-        print("isAudit", isAudit)
-        change_amount = request.data.get('change-amount', 0)
-        change_min = request.data.get('change-min', 0)
-        fullUpdate = request.data.get('full-update')
-        print(request.data)
-        if bool(fullUpdate):
-            print('isfull update',fullUpdate)
-            try:
-                data = request.data
-                instance.name = data['name']
-                instance.quantity = data['quantity']
-                instance.min_quantity = data['min_quantity']
-                instance.category = Category.objects.get(name = data['category'])
-                if instance.image != data['image']:
-                    if isinstance(data['image'], InMemoryUploadedFile):
-                        instance.image.save(data['image']) 
-                
-                instance.price = data['price']
-                instance.url = data['url']
-                instance.notes = data['notes']
-                if data['cancelled']:
-                    instance.cancelled = datetime.datetime.now()
-                instance.save()
-                return Response({"message": "successfully updated", 'status': HTTP_200_OK, "data":data, "item":str(instance)})
-            except Exception as e:
-                print(e)
-                return Response({'status':HTTP_500_INTERNAL_SERVER_ERROR})
-                pass
-        try:
-            change_amount = int(change_amount)
-            change_min = int(change_min)
-            isAudit =  isAudit == "True"
-        except ValueError:
-            return Response ({"error": "Invalid change_amount value"})
-        
-
-        print(bool(isAudit))
-        instance.quantity += change_amount
-        if isAudit:
-            instance.quantity = change_amount
-            instance.min_quantity = change_min
-        if instance.quantity < 0:
-            instance.quantity = 0
-        instance.save()
-        #asyncio.get_event_loop().create_task(update_google_sheet())
-        print(instance.quantity)
-        serializer = self.get_serializer(instance)
-        
-        return Response({"message":"successfully updated", "amount": instance.quantity, 'min': instance.min_quantity}, status=HTTP_200_OK)
-    
+        return super().partial_update(request, *args, **kwargs)
+   
 
 class ItemList(generics.ListCreateAPIView):
     queryset = Item.objects.all()
