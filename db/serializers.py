@@ -16,26 +16,28 @@ class ItemTagSerializer(ModelSerializer):
         model = ItemTag
         fields = "__all__"
         
-class ItemSerialier(ModelSerializer):
+class ItemSerializer(ModelSerializer):
     category = CategorySerializer(many=False)
     image = ImageSerializer(many=False)
     tags = ItemTagSerializer(many=True)
+    
     class Meta:
         model = Item
         fields = "__all__"
+        partial = True
 
 
 
 
 
 class AuditSerializer(ModelSerializer):
-    items = ItemSerialier(many=True)
+    items = ItemSerializer(many=True)
     class Meta:
         model = Audit
         fields = "__all__"
     pass
 class OrderSerializer(ModelSerializer):
-    items = ItemSerialier(many=True)
+    items = ItemSerializer(many=True)
     class Meta:
         model = Order
         fields = "__all__"
